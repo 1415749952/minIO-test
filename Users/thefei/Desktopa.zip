@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioUnknownAPIRequest</Code><Message>Unknown API request at /minio/zip</Message><Resource>/minio/zip</Resource><RequestId></RequestId><HostId>163fcf80-7d82-4dd2-b9d4-eeec5bbeae13</HostId></Error>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>xxxxxxxxxxxx</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+		$(function(){
+
+		});
+
+		function downzip(){
+			console.info("download");
+			const req = {
+		      "bucketName":"package-demo",
+				"objects":["刻盘内容/"],
+				"prefix":""
+		    }
+		    console.info(req.bucketName);	
+			const requestUrl = `http://minio.uindata.com:9000/minio/zip?token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJtaW5pb2FkbWluIiwiZXhwIjoxNjEyNDIwOTMwLCJzdWIiOiJtaW5pb2FkbWluIn0.yu0CTdDB0N9Wa3zIZhI7shBKerx5dDXh-jSsTKy_Wp43XYhdmy8SrKXgsrUnMqGMGbbrmn5rry9m2GQBkGNohg`;
+
+			console.info(requestUrl);	
+			const filename='刻盘内容.zip';
+
+			var anchor = document.createElement("a")
+  			document.body.appendChild(anchor);
+  			var xhr = new XMLHttpRequest();
+		    xhr.open("POST", requestUrl, true);
+			xhr.responseType = "blob";
+			xhr.onload = function (e) {
+		    if (this.status == 200) {
+		      //dispatch(resetCheckedList())
+		      var blob = new Blob([this.response], {
+		        type: "octet/stream",
+		      })
+		      var blobUrl = window.URL.createObjectURL(blob)
+		      var separator = req.prefix.length > 1 ? "-" : ""
+
+		      anchor.href = blobUrl
+		      anchor.download = filename ||
+		      req.bucketName + separator + req.prefix.slice(0, -1) + ".zip"
+
+		      anchor.click()
+		      window.URL.revokeObjectURL(blobUrl)
+		      anchor.remove()
+		    }
+		  }
+		  xhr.send(JSON.stringify(req))
+		}
+	</script>
+</head>
+<body>
+	<button onclick="downzip()">下载</button>
+</body>
+</html>
